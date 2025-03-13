@@ -1,6 +1,6 @@
 const { Pool } = require("pg");
 
-const PG_URI = 'put URI string here'
+const PG_URI = process.env.DATABASE_URI
 
 const pool = new Pool({
     connectionString: PG_URI,

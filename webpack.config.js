@@ -35,7 +35,7 @@ module.exports = {
     new Dotenv(),
   ],
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    static: 'dist',
     compress: true,
     hot: true,
     open: true,

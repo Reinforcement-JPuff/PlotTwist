@@ -3,6 +3,9 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
+// for use of DB URI
+require('dotenv').config();
+
 // parse text from html forms
 app.use(express.urlencoded({ extended: true }));
 // parse JSON
