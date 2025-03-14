@@ -1,0 +1,35 @@
+body {
+    background-color: rgb(36, 59, 128);
+}
+
+/*Login component styling*/
+
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5%;
+    padding: 5%;
+    background-color: antiquewhite;
+    border-radius: 10%;
+    border: solid 1px;
+}
+
+.loginForm input{
+    margin: 3%;
+}
+
+#loginButton {
+    padding-left: 15%;
+    padding-right: 15%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border-radius: 5%;
+    background-color: white;
+}
