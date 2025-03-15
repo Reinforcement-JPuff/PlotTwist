@@ -7,7 +7,8 @@ const Login = () => {
         <form className='loginForm'>
             <input type='text' placeholder='Username'/>
             <input type='text' placeholder='Password'/>
-            <input id="loginButton" type='submit' value='Login'/>
+            <input className="loginButton" id="signUpSubmit" type='submit' value='SignUp'/>
+            <input className="loginButton" id="loginSubmit" type='submit' value='Login'/>
         </form>
     </div>
   )
