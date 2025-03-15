@@ -1,13 +1,20 @@
 body {
-    background-color: rgb(36, 59, 128);
+    background-color: rgb(32, 53, 53);
 }
 
 /*Login component styling*/
+.title {
+    font-family: 'Courier New', Courier, monospace;
+    size: 300px;
+    color: white;
+}
+
 
 .login {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .loginForm {
@@ -17,8 +24,8 @@ body {
     justify-content: center;
     margin: 5%;
     padding: 5%;
-    background-color: antiquewhite;
-    border-radius: 10%;
+    background-color: white;
+    border-radius: 15%;
     border: solid 1px;
 }
 
@@ -26,10 +33,11 @@ body {
     margin: 3%;
 }
 
-#loginButton {
+.loginButton {
     padding-left: 15%;
     padding-right: 15%;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    border-radius: 5%;
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 20%;
     background-color: white;
+    border: none;
 }
