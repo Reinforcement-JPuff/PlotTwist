@@ -27,6 +27,11 @@ app.post('/login', AuthController, (req: any, res: any) => {
   res.status(200).redirect('/home');
 });
 
+// route for new logins, redirect to login after a new account is made
+app.post('/newLogin', AuthController,(req: any, res: any) => {
+  res.status(200).redirect('/login');
+});
+
 // route for story creation (new story nodes)
 app.post('/storyCreator', CreateStoryController, (req: any, res: any) => {
   res.status(200).json(/*res.locals.newStoryNode*/);
