@@ -1,18 +1,84 @@
-const AuthController: object = {
+const { generateJwtToken, verifyJwtToken } = require('../services/jwtService');
+const { pool } = require('pg');
+// use these types for any later? switching now though causes errors on req.user, req.pass, res.cookie. Unsure why, commenting out for now.
+// const { Request, Response, NextFunction } = require('express');
+
+require('dotenv').config();
+
+export const AuthController: object = {
     verifyUser: async (req: any, res: any, next: any) => {
         const { user, pass } = req.body;
+        
+        try {
+            // error handling for user or password
+            if (!user || !pass) {
+                return next({
+                    log: 'In AuthController.verifyUser, missing username or password',
+                    status: 400,
+                    message: { err: 'Unsuccesful login attempt'}
+                });
+            }
 
-        return next();
+            // query string for checking the DB for user and password
+            const queryString = `SELECT * FROM user WHERE username = $1 AND password = $2`;
+            const values = [user, pass];
+
+            // query database to fetch user if they exist in DB
+            const loginResult = await pool.query(queryString, values);
+            // error handling if user doesn't exist, crediential are incorrect, etc.
+            if (loginResult.rows.length === 0) {
+                return next({
+                    log: 'In AuthController.verifyUser, invalid username or password',
+                    status: 401,
+                    message: { err: 'Invalid login credentials'}
+                });
+            } else {
+                // NOTE: function to create a JWT --- see Services folder
+                const token = generateJwtToken(values[0]);
+
+                res.cookie('token', token, { maxAge: 3600000, httpOnly: true, secure: false });
+                return next();
+            }
+
+        } catch (err) {
+            return next({
+                log: 'Error in AuthController.verifyUser',
+                status: 500,
+                message: { err: 'An error occurred' }
+            });
+        }
     },
-    setCookie: async (req: any, res: any, next: any) => {
+    
+    // not sure if necessary? can set cookie after verifying user
+    // setCookie: async (req: any, res: any, next: any) => {
+        
+        
+    //     return next();
+    // },
 
-
-        return next();
-    },
     checkCookie: async (req: any, res: any, next: any) => {
+        const token = req.cookies.token;
 
-
-        return next();
+        if (!token) {
+            return next({
+                log: 'In AuthController.checkCookie, no token found',
+                status: 401,
+                message: { err: 'Please sign in to view this page.' }
+            });
+        }
+    
+        // need to check & decode for token, give access to protected routes
+        try {
+            const decoded = verifyJwtToken(token);
+            res.locals.verifiedUser = decoded;
+            return next();
+        } catch (err) {
+            return next({
+                log: 'In AuthController.checkCookie, invalid or expired token',
+                status: 401,
+                message: { err: 'Invalid token'}
+            })
+        }
     }
 }
 

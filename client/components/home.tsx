@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "../../node_modules/react-redux/dist/react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 
@@ -30,8 +30,8 @@ const Home = () => {
             <div>
                 {stories.map((story) => (
                     <div key = {story.id} onClick={() => alert('Opening ${story.title')}>
-                     <p> {story.title} </p>
-                     </div>   
+                    <p> {story.title} </p>
+                    </div>   
                 ))}
             </div>
             <button onClick={() => navigate("/login")}> Log Out </button>

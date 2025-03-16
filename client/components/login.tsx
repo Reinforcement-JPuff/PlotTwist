@@ -23,9 +23,9 @@ const Login: React.FC = () => {
         <h1 className='title'>PlotTwist</h1>
         <form className='loginForm'>
             <input type='text' placeholder='Username'/>
-            <input type='text' placeholder='Password'/>
-            <input className="loginButton" id="signUpSubmit" type='submit' value='SignUp' onClick={handleSignUpClick}/>
-            <input className="loginButton" id="loginSubmit" type='submit' value='Login' onClick={handleLoginClick}/>
+            <input type='password' placeholder='Password'/>
+            <button className="loginButton" id="signUpSubmit" type='submit' value='SignUp' onClick={handleSignUpClick}/>
+            <button className="loginButton" id="loginSubmit" type='submit' value='Login' onClick={handleLoginClick}/>
         </form>
     </div>
   )

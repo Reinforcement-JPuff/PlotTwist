@@ -2,9 +2,10 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const PORT = 3000;
+const cookieParser = require('cookie-parser');
 
-const AuthController = require('/controllers/AuthController');
-const CreateStoryController = require('/controllers/CreateStoryController');
+const AuthController = require('./controllers/AuthController');
+const CreateStoryController = require('./controllers/CreateStoryController');
 
 // for use of DB URI
 require('dotenv').config();
@@ -13,6 +14,8 @@ require('dotenv').config();
 app.use(express.urlencoded({ extended: true }));
 // parse JSON
 app.use(express.json());
+// parse cookies
+app.use(cookieParser());
 
 // serve static assests in build folder
 app.use(express.static(path.resolve(__dirname, '../assets')));
@@ -23,17 +26,17 @@ app.get('/', (req: any, res: any) => {
 });
 
 // route for login & auth
-app.post('/login', AuthController, (req: any, res: any) => {
-  res.status(200).redirect('/home');
+app.post('/login', AuthController.checkCookie, AuthController.verifyUser, (req: any, res: any) => {
+  res.status(200).send(`Welcome, ${res.locals.verifiedUser}`).redirect('/home');
 });
 
 // route for new logins, redirect to login after a new account is made
-app.post('/newLogin', AuthController,(req: any, res: any) => {
+app.post('/newLogin', AuthController.verifyUser,(req: any, res: any) => {
   res.status(200).redirect('/login');
 });
 
 // route for story creation (new story nodes)
-app.post('/storyCreator', CreateStoryController, (req: any, res: any) => {
+app.post('/storyCreator', /* CreateStoryController,*/ (req: any, res: any) => {
   res.status(200).json(/*res.locals.newStoryNode*/);
 });
 
