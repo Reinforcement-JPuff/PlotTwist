@@ -3,6 +3,7 @@ import path from 'path';
 const app = express();
 const PORT = 3000;
 import cookieParser from 'cookie-parser';
+import { Request, Response, NextFunction } from 'express';
 import AuthController from './controllers/AuthController';
 
 // for use of DB URI

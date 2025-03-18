@@ -2,11 +2,12 @@ import jwtService from '../services/jwtService';
 // import plotTwistModel from '../models/plotTwistModel';
 import pool from '../models/plotTwistModel';
 import query from '../models/plotTwistModel';
-import { NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import 'dotenv/config';
 
 const AuthController = {
     verifyUser: async (req: Request, res: Response, next: NextFunction) => {
+        // console.log('In AuthController.verifyUser');
         const { user, pass } = req.body;
         
         try {

@@ -129,8 +129,9 @@
     "forceConsistentCasingInFileNames": true,
     "lib": ["dom", "esnext"],
     "outDir": "./dist",
-    "rootDir": "./"
+    "rootDir": "./",
+    "typeRoots": ["node_modules@types", "types"]
   },
-  "include": ["client", "server", "custom.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["client", "server", "types/custom.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
