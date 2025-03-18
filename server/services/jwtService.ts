@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
-const crypto = require('crypto');
-require('dotenv').config();
+import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
+import 'dotenv/config';
 
 // generates random secret key for signing JWTs
 const generateSecretKey = (): string => {
@@ -11,13 +11,13 @@ const generateSecretKey = (): string => {
 const secretKey = process.env.JWT_SECRET_KEY || generateSecretKey();
 
 // generate a JWT token
-const generateJwtToken = (user: any) => {
+const generateJwtToken = (user: any): string => {
     const payload = {
     id: user.id,
     username: user.username,
     };
 
-    const options = { expiresIn: "1h" };
+    const options: jwt.SignOptions = { expiresIn: '1h' };
 
   // generate and sign the JWT with the payload and secret key
     const token = jwt.sign(payload, secretKey, options);

@@ -1,12 +1,35 @@
-const { generateJwtToken, verifyJwtToken } = require('../services/jwtService');
-const { pool } = require('pg');
-// use these types for any later? switching now though causes errors on req.user, req.pass, res.cookie. Unsure why, commenting out for now.
-// const { Request, Response, NextFunction } = require('express');
+import jwtService from '../services/jwtService';
+// import plotTwistModel from '../models/plotTwistModel';
+import pool from '../models/plotTwistModel';
+import query from '../models/plotTwistModel';
+import { NextFunction } from 'express';
+import 'dotenv/config';
 
-require('dotenv').config();
+// using intersection type so that TS avoids conflict with default body on Request
+interface AuthRequest extends Omit<Request, 'body'> {
+    body: {
+        user?: string;
+        pass?: string;
+    };
+    cookies?: {
+        token?: string;
+    }
+}
 
-export const AuthController: object = {
-    verifyUser: async (req: any, res: any, next: any) => {
+interface AuthResponse extends Response {
+    cookie(arg0: string, token: void, arg2: { maxAge: number; httpOnly: boolean; secure: boolean; }): unknown;
+    cookies: {
+        token?: string;
+    }
+}
+
+interface AuthControllerInterface {
+    verifyUser: (req: AuthRequest, res: AuthResponse, next: NextFunction) => Promise<void>;
+    checkCookie: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+}
+
+const AuthController: AuthControllerInterface = {
+    verifyUser: async (req: AuthRequest, res: AuthResponse, next: NextFunction) => {
         const { user, pass } = req.body;
         
         try {
@@ -24,7 +47,7 @@ export const AuthController: object = {
             const values = [user, pass];
 
             // query database to fetch user if they exist in DB
-            const loginResult = await pool.query(queryString, values);
+            const loginResult: any = await pool.query(queryString, values);
             // error handling if user doesn't exist, crediential are incorrect, etc.
             if (loginResult.rows.length === 0) {
                 return next({
@@ -36,7 +59,7 @@ export const AuthController: object = {
                 // NOTE: function to create a JWT --- see Services folder
                 const token = generateJwtToken(values[0]);
 
-                res.cookie('token', token, { maxAge: 3600000, httpOnly: true, secure: false });
+                res.cookie('token', token, { maxAge: 3600000, httpOnly: true, secure: true });
                 return next();
             }
 
@@ -83,3 +106,10 @@ export const AuthController: object = {
 }
 
 export default AuthController;
+
+function generateJwtToken(arg0: any) {
+    throw new Error('Function not implemented.');
+}
+function verifyJwtToken(token: any) {
+    throw new Error('Function not implemented.');
+}
