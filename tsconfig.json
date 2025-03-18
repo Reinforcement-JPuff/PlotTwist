@@ -131,6 +131,6 @@
     "outDir": "./dist",
     "rootDir": "./"
   },
-  "include": ["client", "server", "**/*.ts", "**/*.tsx"],
+  "include": ["client", "server", "custom.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
