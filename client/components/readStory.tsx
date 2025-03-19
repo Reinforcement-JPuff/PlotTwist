@@ -3,11 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
 import { goToPage } from "../readStorySlice";
 
-const ReadStory: React.FC = () => {
-  const dispatch = useDispatch();
-  const { pages, currentPage } = useSelector((state: RootState) => state.story);
+interface StoryPage {
+  id: number;
+  title: string;
+  text: string;
+  choices: { text: string; nextPage: number }[];
+}
 
-  const current = pages.find((p) => p.id === currentPage) || pages[0];
+const ReadStory = () => {
+  const dispatch = useDispatch();
+  const { pages, currentPage } = useSelector((state: RootState) => state.readStory); // ✅ Get from `readStory`
+
+  const current: StoryPage = pages.find((p) => p.id === currentPage) || pages[0];
 
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>

@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
-import { updateStory } from "../storySlice";
+import { setCurrentStory } from "../storySlice";
 import Comments from "../components/comments";
 
-const Story: React.FC = () => {
+const Story = () => {
   const dispatch = useDispatch();
-  const story = useSelector((state: RootState) => state.story);
+  const story = useSelector((state: RootState) => state.stories.currentStory);
   const [notification, setNotification] = useState(false);
 
+  if (!story) {
+    return <p>Story not found. Please select a story.</p>;
+  }
+
   const handleAddToLibrary = () => {
-    dispatch(updateStory(story)); // Updates Redux story state
+    dispatch(setCurrentStory(story.id));
     setNotification(true);
     setTimeout(() => setNotification(false), 2000);
   };

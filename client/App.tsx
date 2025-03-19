@@ -8,6 +8,7 @@ import Home from './components/home';
 import Story from "./components/story";
 import ReadStory from "./components/readStory";
 import Comment from "./components/comments";
+import Library from "./components/library";
 
 const App = () => {
   return (
@@ -17,8 +18,9 @@ const App = () => {
         <Route path="/newLogin" element={<NewLogin />} /> 
         <Route path="/home" element={<Home />} />
         <Route path="/story" element={<Story />} />
-        <Route path="/read" element={<ReadStory />} />
+        <Route path="/read:id" element={<ReadStory />} />
         <Route path="/comment" element={<Comment />} />
+        <Route path="/library" element={<Library />} />
       </Routes>
     </Router>
   )

@@ -7,22 +7,31 @@ interface Story {
   bio: string;
 }
 
-const initialState: Story = {
-  id: 1,
-  title: "The Unexpected Twist",
-  cover: "/cover.jpg",
-  bio: "A mystery story full of surprises.",
+interface StoryState {
+  stories: Story[]; 
+  currentStory?: Story
+}
+
+const initialState: StoryState = {
+  stories: [
+    { id: 1, 
+      title: "The Unexpected Twist", 
+      cover: "/cover.jpg", 
+      bio: "A mystery story full of surprises." 
+    },
+  ],
+  currentStory: undefined,
 };
 
 const storySlice = createSlice({
-  name: "story",
+  name: "stories",
   initialState,
   reducers: {
-    updateStory: (state, action: PayloadAction<Story>) => {
-      return action.payload; // Replaces the story
+    setCurrentStory: (state, action: PayloadAction<number>) => {
+      state.currentStory = state.stories.find((story) => story.id === action.payload);
     },
   },
 });
 
-export const { updateStory } = storySlice.actions;
+export const { setCurrentStory} = storySlice.actions;
 export default storySlice.reducer;
