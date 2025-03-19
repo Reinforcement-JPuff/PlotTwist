@@ -2,6 +2,11 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import 'dotenv/config';
 
+export interface User {
+    id: number;
+    username: string;
+}
+
 // generates random secret key for signing JWTs
 const generateSecretKey = (): string => {
     return crypto.randomBytes(32).toString('hex');
@@ -11,7 +16,7 @@ const generateSecretKey = (): string => {
 const secretKey = process.env.JWT_SECRET_KEY || generateSecretKey();
 
 // generate a JWT token
-const generateJwtToken = (user: any): string => {
+const generateJwtToken = (user: User): string => {
     const payload = {
     id: user.id,
     username: user.username,
@@ -26,14 +31,14 @@ const generateJwtToken = (user: any): string => {
 }
 
 // function to verify JWT token
-const verifyJwtToken = (token: any) => {
+const verifyJwtToken = (token: string): { id: number; username: string } => {
     try {
-        // decoding the payload to verify a valid token
-        const decoded = jwt.verify(token, secretKey);
+        // Decoding the payload to verify a valid token
+        const decoded = jwt.verify(token, secretKey) as { id: number; username: string };
         return decoded;
     } catch (err) {
-        throw new Error("Invalid or expired token");
+        throw new Error('Invalid or expired token');
     }
-}
+};
 
 export default { generateJwtToken, verifyJwtToken };
