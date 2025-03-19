@@ -1,7 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import storyReducer from "./homeSlice";
-import libraryReducer from "./storySlice";
+import storiesReducer from "./storySlice";
+import commentsReducer from "./commentsSlice";
+import readStorySliceReducer from "./readStorySlice";
 
 // const rootReducer = combineReducers({
     
@@ -10,7 +12,9 @@ import libraryReducer from "./storySlice";
 const store = configureStore({
     reducer: {
         stories: storyReducer,
-        library: libraryReducer,
+        comments: commentsReducer,
+        story: storiesReducer,
+        readStory: readStorySliceReducer,
     }
 });
 export type RootState = ReturnType<typeof store.getState>;

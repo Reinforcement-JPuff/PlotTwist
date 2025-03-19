@@ -1,27 +1,16 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addToLibrary } from "../storySlice"
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { updateStory } from "../storySlice";
+import Comments from "../components/comments";
 
-interface StoryProps {
-  id: number;
-  title: string;
-  cover: string;
-  bio: string;
-}
-
-const Story = () => {
+const Story: React.FC = () => {
   const dispatch = useDispatch();
+  const story = useSelector((state: RootState) => state.story);
   const [notification, setNotification] = useState(false);
 
-  const story: StoryProps = {
-    id: 1,
-    title: "The Unexpected Twist",
-    cover: "/cover.jpg",
-    bio: "A mystery story full of surprises.",
-  };
-
   const handleAddToLibrary = () => {
-    dispatch(addToLibrary(story));
+    dispatch(updateStory(story)); // Updates Redux story state
     setNotification(true);
     setTimeout(() => setNotification(false), 2000);
   };
@@ -37,12 +26,11 @@ const Story = () => {
         <button onClick={handleAddToLibrary}>Add to Library</button>
       </div>
 
-      <button>Comments</button>
+      <Comments />
 
       {notification && <div>Added to Library!</div>}
     </div>
   );
 };
-
 
 export default Story;
