@@ -4,8 +4,8 @@ import storyReducer from "./storySlice";
 import commentsReducer from "./commentsSlice";
 import readStoryReducer from "./readStorySlice"; 
 import libraryReducer from "./librarySlice";
+import loginReducer from "./loginSlice";
 //import { combineReducers } from "redux";
-
 
 // const rootReducer = combineReducers({
     
@@ -13,6 +13,7 @@ import libraryReducer from "./librarySlice";
 
 const store = configureStore({
     reducer: {
+        login: loginReducer,
         home: homeReducer,
         stories: storyReducer,
         comments: commentsReducer,

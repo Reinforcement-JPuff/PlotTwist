@@ -11,6 +11,7 @@ const NewLogin: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // Add your form handling logic here
+        
     };
 
     return (

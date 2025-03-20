@@ -1,11 +1,13 @@
 import express from 'express';
 import path from 'path';
-const app = express();
-const PORT = 3000;
 import cookieParser from 'cookie-parser';
 import { Request, Response, NextFunction } from 'express';
 import AuthController from './controllers/AuthController';
+import StoryController from "./controllers/StoryController";
 import 'dotenv/config';
+
+const app = express();
+const PORT = 3000;
 
 // parse text from html forms
 app.use(express.urlencoded({ extended: true }));
@@ -13,14 +15,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // parse cookies
 app.use(cookieParser());
-
 // serve static assests in build folder
 app.use(express.static(path.resolve(__dirname, '../assets')));
+
 
 // route for root
 app.get('/', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
+
+/*
+  Login 
+  */
 
 // route for login & auth
 app.post('/login', AuthController.verifyUser, (req: Request, res: Response) => {
@@ -32,25 +38,40 @@ app.post('/newLogin', AuthController.createUser, (req: Request, res: Response) =
   res.status(200).json(`Welcome to PlotTwist, ${res.locals.user}!`).redirect('/login');
 });
 
-// route for fetching story info --- for the Story component with bio, comments, i.e. the 'cover page'
-// app.get('/story/:id'), /*StoryController,*/ (req: Request, res: Response) => {
-//   res.status(200).json(/*res.locals.storyCoverPage*/);
-// };
+/* 
+  Story 
+  */
 
-// route for getting the story text --- for the Read Story component
-// app.get('/story/:id'), /*StoryController,*/ (req: Request, res: Response) => {
-//   res.status(200).json(/*res.locals.fetchedStory*/);
-// };
+//route for fetching story info --- for the Story component with bio, comments, i.e. the 'cover page'
+app.get('/story/:id'), StoryController.getStory, (req: Request, res: Response) => {
+  res.status(200).json(res.locals.story);
+};
 
-// route for getting saved stories --- for the Library component
-// app.get('/library), /*StoryController,*/ (req: Request, res: Response) => {
-//   res.status(200).json(/*res.locals.fetchedStory*/);
-// };
+//route for getting the story text --- for the Read Story component
+app.get('/story/read/:id'), StoryController.getFullStory, (req: Request, res: Response) => {
+  res.status(200).json(res.locals.fullStory);
+};
 
-// // route for story creation (new story nodes)
-// app.post('/storyCreator', /* CreateStoryController,*/ (req: any, res: any) => {
-//   res.status(200).json(/*res.locals.newStoryNode*/);
-// });
+//route for getting saved stories --- for the Library component
+app.get("/library", StoryController.getLibraryStories, (req: Request, res: Response) => {
+  res.status(200).json(res.locals.library);
+});
+
+/*
+  Story Creator
+  */
+
+// route for story creation (new story nodes)
+app.post('/storyCreator', /* CreateStoryController,*/ (req: any, res: any) => {
+  res.status(200).json(/*res.locals.newStoryNode*/);
+});
+
+// Serves React frontend for all unmatched routes
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "../dist/index.html"));
+});
+
+
 
 // global error handler
 app.use((err: any, req: any, res: any, next: any) => {
