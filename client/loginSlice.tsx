@@ -18,8 +18,12 @@ const loginSlice = createSlice({
             state.username = action.payload.username;
             state.password = action.payload.password;
         },
+        newLogin: (state, action: PayloadAction<{ username: string; password: string }>) => {
+            state.username = action.payload.username;
+            state.password = action.payload.password;
+        },
     }
 })
 
-export const { login } = loginSlice.actions;
+export const { login, newLogin } = loginSlice.actions;
 export default loginSlice.reducer;
