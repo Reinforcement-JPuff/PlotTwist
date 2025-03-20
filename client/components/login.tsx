@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../assets/styles.css';
-import { useSelector, useDispatch } from 'react-redux';
 //import * as actions from [put file path to Redux actions];
 
 const Login: React.FC = () => {
