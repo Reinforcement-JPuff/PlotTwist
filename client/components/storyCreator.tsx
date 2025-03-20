@@ -7,6 +7,7 @@ import {
   useNodesState,
   useEdgesState,
   addEdge,
+  BackgroundVariant,
 } from '@xyflow/react';
 
 import '@xyflow/react/dist/style.css';
@@ -21,10 +22,22 @@ const StoryCreator = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+  // Add this node creation handler
+  const createNode = useCallback((event: React.MouseEvent) => {
+    const newNode = {
+      id: `${Date.now()}`,
+      position: { x: event.clientX, y: event.clientY },
+      data: { label: 'New Node' },
+    };
+    setNodes((nds) => nds.concat(newNode));
+  }, [setNodes]);
+
+
   const onConnect = useCallback(
     (params: any) => setEdges((eds) => addEdge(params, eds)),
     [setEdges],
   );
+
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
@@ -34,10 +47,12 @@ const StoryCreator = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        // Add this double-click handler
+        onDoubleClick={createNode}
       >
         <Controls />
         <MiniMap />
-        <Background variant='dots' gap={12} size={1} />
+        <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
       </ReactFlow>
     </div>
   );

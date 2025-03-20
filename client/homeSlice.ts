@@ -16,7 +16,7 @@ const storySlice = createSlice({
   name: "stories",
   initialState,
   reducers: {
-    addStory: (state, action: PayloadAction<Story>) => {
+    addStory: (state: any, action: PayloadAction<Story>) => {
       state.stories.push(action.payload);
     },
   },
