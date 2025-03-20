@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { combineReducers } from "redux";
+//import { combineReducers } from "redux";
 import storyReducer from "./homeSlice";
-import libraryRecducer from "./storySlice";
+import libraryReducer from "./storySlice";
 
 // const rootReducer = combineReducers({
     

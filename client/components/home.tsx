@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "../../node_modules/react-redux/dist/react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 
