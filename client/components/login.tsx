@@ -23,8 +23,8 @@ const Login: React.FC = () => {
         <form className='loginForm'>
             <input type='text' placeholder='Username'/>
             <input type='password' placeholder='Password'/>
-            <button className="loginButton" id="signUpSubmit" type='submit' value='SignUp' onClick={handleSignUpClick}/>
-            <button className="loginButton" id="loginSubmit" type='submit' value='Login' onClick={handleLoginClick}/>
+            <button className="loginButton" id="signUpSubmit" type='submit' onClick={handleSignUpClick}>Sign Up</button>
+            <button className="loginButton" id="loginSubmit" type='submit' onClick={handleLoginClick}>Login</button>
         </form>
     </div>
   )
