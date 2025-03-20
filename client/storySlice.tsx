@@ -7,28 +7,31 @@ interface Story {
   bio: string;
 }
 
-interface LibraryState {
-  savedStories: Story[];
+interface StoryState {
+  stories: Story[]; 
+  currentStory?: Story
 }
 
-const initialState: LibraryState = {
-  savedStories: [],
+const initialState: StoryState = {
+  stories: [
+    { id: 1, 
+      title: "The Unexpected Twist", 
+      cover: "/cover.jpg", 
+      bio: "A mystery story full of surprises." 
+    },
+  ],
+  currentStory: undefined,
 };
 
-const librarySlice = createSlice({
-  name: "library",
+const storySlice = createSlice({
+  name: "stories",
   initialState,
   reducers: {
-    addToLibrary: (state, action: PayloadAction<Story>) => {
-      const storyExists = state.savedStories.find(
-        (story) => story.id === action.payload.id
-      );
-      if (!storyExists) {
-        state.savedStories.push(action.payload);
-      }
+    setCurrentStory: (state, action: PayloadAction<number>) => {
+      state.currentStory = state.stories.find((story) => story.id === action.payload);
     },
   },
 });
 
-export const { addToLibrary } = librarySlice.actions;
-export default librarySlice.reducer;
+export const { setCurrentStory} = storySlice.actions;
+export default storySlice.reducer;
