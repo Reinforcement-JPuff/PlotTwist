@@ -4,7 +4,8 @@ import '../assets/styles.css';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
 import { newLogin } from '../loginSlice';
-//import * as actions from '../store/authActions';
+import { useNewUserMutation } from '../features/apiSlice';
+// import * as actions from '../store/authActions';
 // import * as actions from [put file path to Redux actions];
 
 const NewLogin: React.FC = () => {
