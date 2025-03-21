@@ -5,6 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 import AuthController from './controllers/AuthController';
 import StoryController from "./controllers/StoryController";
 import 'dotenv/config';
+import cors from 'cors';
 
 const app = express();
 const PORT = 3000;
@@ -15,9 +16,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // parse cookies
 app.use(cookieParser());
+// enable CORS for frontend requests
+app.use(cors({
+  origin: 'http://localhost:8080',
+  credentials: true,
+}));
+
 // serve static assests in build folder
 app.use(express.static(path.resolve(__dirname, '../assets')));
-
 
 // route for root
 app.get('/', (req: Request, res: Response) => {
@@ -29,13 +35,13 @@ app.get('/', (req: Request, res: Response) => {
   */
 
 // route for login & auth
-app.post('/login', AuthController.verifyUser, (req: Request, res: Response) => {
-  res.status(200).json(`Welcome, ${res.locals.verifiedUser.username}`).redirect('/home');
+app.post('/login', AuthController.checkCookie, AuthController.verifyUser, (req: Request, res: Response) => {
+  res.status(200).json(`Welcome, ${res.locals.verifiedUser.username}`)
 });
 
 // route for new users, redirect to login after a new account is made
 app.post('/newLogin', AuthController.createUser, (req: Request, res: Response) => {
-  res.status(200).json(`Welcome to PlotTwist, ${res.locals.user}!`).redirect('/login');
+  res.status(200).json(`Welcome to PlotTwist, ${res.locals.user}!`)
 });
 
 /* 
@@ -79,7 +85,11 @@ app.use((err: any, req: any, res: any, next: any) => {
       log: 'Express error handler caught an error in middleware',
       status: 500,
       message: { err: 'An error occurred' }
-  }
+  };
+
+  const error = { ...defaultError, ...err };
+  console.error(error.log);
+  return res.status(error.status).json(error.message);
 });
 
 app.listen(PORT, () => {

@@ -15,16 +15,16 @@ const Login = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   
-  
   const handleLoginClick = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const res = await loginUser({username, password}).unwrap();
+      console.log(res);
+      
       dispatch(login({username, password}));
-
-      console.log(res.message);
       
       navigate('/home');
+
     } catch (error) {
       console.error('Failed to login:', error)
     }
