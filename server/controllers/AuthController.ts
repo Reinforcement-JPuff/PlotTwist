@@ -30,16 +30,19 @@ const AuthController = {
 
             // error handling if user doesn't exist, credientials are incorrect, etc.
             if (loginResult.rows.length === 0) {
+                console.log("User not found");
                 return next({
                     log: 'In AuthController.verifyUser, invalid username or password',
                     status: 401,
                     message: { err: 'Invalid login credentials'}
                 });
             } else {
+                // console.log("Valid user found, generating token...");
                 const token = jwtService.generateJwtToken({ id: loginResult.rows[0].userID, username: username });
+                // console.log('Generated token:', token);
 
                 res.locals.verifiedUser = { id: loginResult.rows[0].userID, username: username };
-                res.cookie('token', token, { maxAge: 3600000, httpOnly: true, secure: true });
+                res.cookie('token', token, { maxAge: 3600000, httpOnly: true, secure: false, sameSite: 'strict' });
                 return next();
             }
         } catch (err) {
@@ -85,11 +88,7 @@ const AuthController = {
         const token = req.cookies.token;
 
         if (!token) {
-            return next({
-                log: 'In AuthController.checkCookie, no token found',
-                status: 401,
-                message: { err: 'Please sign in to view this page.' }
-            });
+            return next();
         }
     
         // need to check & decode for token, give access to protected routes
@@ -97,12 +96,14 @@ const AuthController = {
             const decoded = jwtService.verifyJwtToken(token);
             res.locals.verifiedUser = decoded;
             return next();
+
         } catch (err) {
-            return next({
-                log: 'In AuthController.checkCookie, invalid or expired token',
-                status: 401,
-                message: { err: 'Invalid token'}
-            })
+            // return next({
+            //     log: 'In AuthController.checkCookie, invalid or expired token',
+            //     status: 401,
+            //     message: { err: 'Invalid token'}
+            // })
+            return next()
         }
     }
 }

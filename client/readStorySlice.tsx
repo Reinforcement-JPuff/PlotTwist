@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Define the type for each story page
-interface StoryPage {
+export interface StoryPage {
   id: number;
   title: string;
   text: string;
   choices: { text: string; nextPage: number }[];
 }
 
-// Define the structure of the Redux state
+// Define the structure of state
 interface StoryState {
   pages: StoryPage[];
   currentPage: number;
@@ -48,7 +48,7 @@ const initialState: StoryState = {
   currentPage: 1,
 };
 
-// Create a Redux slice for managing story navigation
+// Create a slice for managing story navigation
 const readStorySlice = createSlice({
   name: "readStory",
   initialState,

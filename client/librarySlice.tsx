@@ -28,9 +28,11 @@ const librarySlice = createSlice({
   name: "library",
   initialState,
   reducers: {
+    // POST to the DB should be made from inside the StoryCreator component
     addWrittenStory: (state, action: PayloadAction<Story>) => {
       state.writtenStories.push(action.payload);
     },
+    // POST to the DB should be from inside the Story (cover page) component
     addSavedStory: (state, action: PayloadAction<Story>) => {
       state.savedStories.push(action.payload);
     },

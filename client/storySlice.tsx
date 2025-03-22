@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Story {
+export interface Story {
   id: number;
   title: string;
   cover: string;
   bio: string;
 }
 
-interface StoryState {
+export interface StoryState {
   stories: Story[]; 
   currentStory?: Story
 }
@@ -27,11 +27,11 @@ const storySlice = createSlice({
   name: "stories",
   initialState,
   reducers: {
-    setCurrentStory: (state, action: PayloadAction<number>) => {
-      state.currentStory = state.stories.find((story) => story.id === action.payload);
+    setCurrentStory: (state, action: PayloadAction<Story>) => {
+      state.currentStory = action.payload;
     },
   },
 });
 
-export const { setCurrentStory} = storySlice.actions;
+export const { setCurrentStory } = storySlice.actions;
 export default storySlice.reducer;
