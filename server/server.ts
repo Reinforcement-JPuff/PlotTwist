@@ -75,7 +75,7 @@ app.get("/home", StoryController.getStoriesFeed, (req: Request, res: Response) =
   */
  
 // route for story creation (saving a full story graph)
-app.post('/storyCreator', CreateStoryController.saveStory, (req: Request, res: Response) => {
+app.post('/saveStory', CreateStoryController.saveStory, (req: Request, res: Response) => {
   res.status(200).json({ message: 'Story saved successfully', storyId: res.locals.savedStoryId });
 });
 

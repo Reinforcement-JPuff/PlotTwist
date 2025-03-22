@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from 'react';
+import { useSaveStoryMutation } from '../features/apiSlice';
+
 import {
   ReactFlow,
   MiniMap,
@@ -24,7 +26,7 @@ const StoryCreator = () => {
   const [editedLabel, setEditedLabel] = useState('');
   const [editedContent, setEditedContent] = useState('');
 
-  const createNode = useCallback((event) => {
+  const createNode = useCallback((event: any) => {
     const newNode = {
       id: `${Date.now()}`,
       position: { x: event.clientX, y: event.clientY },
@@ -34,11 +36,11 @@ const StoryCreator = () => {
   }, [setNodes]);
 
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params: any) => setEdges((eds) => addEdge(params, eds)),
     [setEdges],
   );
 
-  const onNodeClick = useCallback((event, node) => {
+  const onNodeClick = useCallback((event: any, node: any) => {
     setSelectedNode(node.id);
     setEditedLabel(node.data.label);
     setEditedContent(node.data.content || '');
@@ -54,7 +56,9 @@ const StoryCreator = () => {
     );
     setSelectedNode(null); // Close the edit form
   }, [selectedNode, editedLabel, editedContent, setNodes]);
-
+    
+  const [saveStory] = useSaveStoryMutation();
+  
   const handleSaveStory = async () => {
     const storyData = {
       nodes: nodes.map(node => ({

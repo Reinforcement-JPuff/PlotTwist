@@ -37,7 +37,7 @@ const Login = () => {
   };
     
   return (
-    <form onSubmit={handleLoginClick} style={{ textAlign: "center" }}>
+    <form className="loginForm" onSubmit={handleLoginClick} style={{ textAlign: "center" }}>
       <h2>Login</h2>
       <input
         value={username}
@@ -50,12 +50,12 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       /><br />
-      <button type="submit" disabled={isLoading}>Login</button>
+      <button className="loginButton" type="submit" disabled={isLoading}>Login</button>
 
       {isError && <p style={{ color: "red" }}>Login failed</p>}
 
       <p>Don't have an account?</p>
-      <button onClick={handleSignUpClick} type="button">
+      <button className="loginButton" onClick={handleSignUpClick} type="button">
         Sign Up
       </button>
     </form>
