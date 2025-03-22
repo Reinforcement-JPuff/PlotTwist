@@ -37,7 +37,9 @@ const Login = () => {
   };
     
   return (
-    <form className="loginForm" onSubmit={handleLoginClick} style={{ textAlign: "center" }}>
+    <div className="login">
+      <h1 id="siteTitle">Welcome to PlotTwist!</h1>
+      <form className="loginForm" onSubmit={handleLoginClick} style={{ textAlign: "center" }}>
       <h2>Login</h2>
       <input
         value={username}
@@ -59,6 +61,7 @@ const Login = () => {
         Sign Up
       </button>
     </form>
+    </div>
   );
 };
 

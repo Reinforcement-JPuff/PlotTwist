@@ -74,7 +74,7 @@ const StoryCreator = () => {
     };
 
     try {
-      const response = await fetch('/saveStory', {
+      const response = await fetch('/storyCreator', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(storyData),

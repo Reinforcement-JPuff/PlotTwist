@@ -9,9 +9,11 @@ import { node } from 'webpack';
 
  const CreateStoryController = {
     saveStory: async (req: Request, res: Response, next : NextFunction) => {
-     const { nodes, edges } = req.body;
+      const { nodes, edges } = req.body;
+      console.log('Nodes:', nodes);
+      console.log('Edges:', nodes);
 
-     try {
+    try {
         const token = req.cookies.token;
         const decoded = jwtService.verifyJwtToken(token);
         const userId = decoded.id;

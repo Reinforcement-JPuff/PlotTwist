@@ -45,7 +45,7 @@ const NewLogin = () => {
       
         return (
             <div className='newLogin'>
-              <button className='backButton' onClick={handleBackClick}>Back</button>
+              <button id='backButton' onClick={handleBackClick}>Back</button>
         
               <form className='newLoginForm' onSubmit={handleSubmit}>
                 <input

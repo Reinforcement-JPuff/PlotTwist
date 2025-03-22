@@ -10,6 +10,9 @@ body {
     color: white;
 }
 
+#siteTitle {
+    color: white;
+}
 
 .login {
     display: flex;
@@ -26,12 +29,14 @@ body {
     margin: 5%;
     padding: 5%;
     background-color: white;
-    border-radius: 15%;
+    border-radius: 20px;
     border: solid 1px;
 }
 
 .loginForm input{
     margin: 3%;
+    width: 250px;
+
 }
 
 .loginButton {
@@ -42,7 +47,62 @@ body {
     border-radius: 20px;
     background-color: white;
     border-color: rgb(32, 53, 53);
+    border: 1px;
+}
+
+.newLogin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.newLoginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5%;
+    padding: 5%;
+    background-color: white;
+    border-radius: 20px;
+    border: solid 1px;
+    width: 100%; /* Allows flexibility */
+    max-width: 500px; /* Limits the width to prevent stretching */
+    box-sizing: border-box; /* Ensures padding doesn't affect the width */
+}
+
+.newLoginForm input {
+    margin: 3%;
+    width: 100%; /* Make the input field take up full width within the container */
+    max-width: 500px;
+    border-radius: 5px;
+}
+
+#backButton {
+    size: 50px;
+    padding-left: 15%;
+    padding-right: 15%;
+    width: 250px;
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 20px;
+    background-color: white;
+    border-color: rgb(32, 53, 53);
     border: none;
+}
+
+#newLoginButton {
+    padding-left: 15%;
+    padding-right: 15%;
+    width: 250px;
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 20px;
+    background-color: white;
+    border-color: rgb(32, 53, 53);
+    border: none;
+    display: block;
+    margin: 0 auto;
 }
 
 /* Home page component styling */
@@ -62,6 +122,9 @@ body {
     cursor: pointer;
     text-align: center;
     padding: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .homeFeedCardContainer {
@@ -76,6 +139,9 @@ body {
     cursor: pointer;
     text-align: center;
     padding: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .homeFeedButtons {
@@ -102,12 +168,12 @@ body {
     border-radius: 20px;
     width: 50%;
     display: block;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
     margin-top: 5px;
     padding-left: 10px;
     padding-right: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .homeFeedCard:hover {
@@ -116,7 +182,7 @@ body {
 }
 
 .homeFeedImg {
-    width: 50%;
+    width: 30%;
     height: auto;
     border-radius: 10px;
     margin: 10px;
@@ -139,11 +205,13 @@ body {
     font-size: 1em;
     color: #777;
     margin-top: 5px;
-    /* width: 100%; */
     display: block;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
     padding-left: 10px;
     padding-right: 10px;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowed text */
+    text-overflow: ellipsis; /* Show ellipsis when text overflows */
+    max-width: 100%; /* Ensures the width is constrained within its parent */
+    width: 100%; /* Explicit width to ensure text doesn't run off the container */
+    box-sizing: border-box;
 }
