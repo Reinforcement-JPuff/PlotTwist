@@ -5,8 +5,10 @@ import { QueryResult } from 'pg';
 import jwtService from '../services/jwtService';
 import 'dotenv/config';
 
-export const CreateStoryController: object = {
-    
+ const CreateStoryController: object = {
+    saveStory: async (req: Request, res: Response, next : NextFunction) => {
+        
+    }
     // return next();
 }
 

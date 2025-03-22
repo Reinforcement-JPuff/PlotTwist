@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import { Request, Response, NextFunction } from 'express';
 import AuthController from './controllers/AuthController';
 import StoryController from "./controllers/StoryController";
+import CreateStoryController from './controllers/CreateStoryController';
 import 'dotenv/config';
 import cors from 'cors';
 import CommentsController from './controllers/CommentsController';
@@ -72,10 +73,10 @@ app.get("/home", StoryController.getStoriesFeed, (req: Request, res: Response) =
 /*
   Story Creator
   */
-
-// route for story creation (new story nodes)
-app.post('/storyCreator', /* CreateStoryController,*/ (req: Request, res: Response) => {
-  res.status(200).json(/*res.locals.newStoryNode*/);
+ 
+// route for story creation (saving a full story graph)
+app.post('/storyCreator', CreateStoryController.saveStory, (req: Request, res: Response) => {
+  res.status(200).json({ message: 'Story saved successfully', storyId: res.locals.savedStoryId });
 });
 
 /* Comments */

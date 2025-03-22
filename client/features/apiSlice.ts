@@ -57,6 +57,14 @@ export const apiSlice  = createApi({
         }),
 
         // Story Creator (e.g., saving a finished story)
+        // save story node
+        saveStory : builder.mutation<{ message:string } , any >({
+          query: (storyData) => ({
+            url: '/saveStory',
+            method: 'POST',
+            body: storyData,
+          }),
+        }),
 
         // Story cover (e.g., getting a story cover with bio, comments)
         getStoryCover: builder.query <{ id: number, title: string, cover: string, bio: string }, number> ({
@@ -69,10 +77,10 @@ export const apiSlice  = createApi({
 
         // post comment
          postComment: builder.mutation<Comment, { storyId: number; username: string; text: string }>({
-        query: ({ storyId, username, text }) => ({
-          url: `/story/${storyId}/comments`,
-          method: 'POST',
-          body: { username, text },
+          query: ({ storyId, username, text }) => ({
+            url: `/story/${storyId}/comments`,
+            method: 'POST',
+            body: { username, text },
         }),
       }),
   
@@ -91,6 +99,7 @@ export const {
     useGetStoryCoverQuery,
     useGetStoryPageQuery,
     useGetCommentsQuery,
+    useSaveStoryMutation,
     usePostCommentMutation,
     useGetUserMadeStoriesQuery,
     useGetUserSavedStoriesQuery,
