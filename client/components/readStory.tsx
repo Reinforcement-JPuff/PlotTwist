@@ -12,7 +12,7 @@ interface StoryPage {
 
 const ReadStory = () => {
   const dispatch = useDispatch();
-  const { pages, currentPage } = useSelector((state: RootState) => state.readStory); // ✅ Get from `readStory`
+  const { pages, currentPage } = useSelector((state: RootState) => state.readStory);
 
   const current: StoryPage = pages.find((p) => p.id === currentPage) || pages[0];
 
