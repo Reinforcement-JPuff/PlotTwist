@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Define the type for each story page
-interface StoryPage {
+export interface StoryPage {
   id: number;
   title: string;
   text: string;

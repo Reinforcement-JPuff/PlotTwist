@@ -37,16 +37,29 @@ const Login = () => {
   };
     
   return (
-    <div className='login'>
-        <h1 className='title'>PlotTwist</h1>
-        <form className='loginForm'>
-            <input type='text' placeholder='Username' onChange={(e) => setUsername(e.target.value)}/>
-            <input type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)}/>
-            <button className="loginButton" id="signUpSubmit" type='submit' onClick={handleSignUpClick}>Sign Up</button>
-            <button className="loginButton" id="loginSubmit" type='submit' onClick={handleLoginClick}>Login</button>
-        </form>
-    </div>
-  )
+    <form onSubmit={handleLoginClick} style={{ textAlign: "center" }}>
+      <h2>Login</h2>
+      <input
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
+      /><br />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      /><br />
+      <button type="submit" disabled={isLoading}>Login</button>
+
+      {isError && <p style={{ color: "red" }}>Login failed</p>}
+
+      <p>Don't have an account?</p>
+      <button onClick={handleSignUpClick} type="button">
+        Sign Up
+      </button>
+    </form>
+  );
 };
 
 export default Login;

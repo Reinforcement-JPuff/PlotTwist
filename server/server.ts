@@ -6,6 +6,7 @@ import AuthController from './controllers/AuthController';
 import StoryController from "./controllers/StoryController";
 import 'dotenv/config';
 import cors from 'cors';
+import CommentsController from './controllers/CommentsController';
 
 const app = express();
 const PORT = 3000;
@@ -48,21 +49,22 @@ app.post('/newLogin', AuthController.createUser, (req: Request, res: Response) =
   Story 
   */
 
-//route for fetching story info --- for the Story component with bio, comments, i.e. the 'cover page'
-app.get('/story/:id'), StoryController.getStory, (req: Request, res: Response) => {
+//route for fetching story info 
+app.get('/story/:id', StoryController.getStory, (req: Request, res: Response) => {
   res.status(200).json(res.locals.story);
-};
+});
 
-//route for getting the story text --- for the Read Story component
-app.get('/story/read/:id'), StoryController.getFullStory, (req: Request, res: Response) => {
-  res.status(200).json(res.locals.fullStory);
-};
+//route for getting the story text
+app.get('/story/:storyId/page/:pageId', StoryController.getPage, (req, res) => {
+  res.status(200).json(res.locals.page);
+});
 
-//route for getting saved stories --- for the Library component
+//route for getting saved stories
 app.get("/library", StoryController.getLibraryStories, (req: Request, res: Response) => {
   res.status(200).json(res.locals.library);
 });
 
+// route for getting stories in the feed for home
 app.get("/home", StoryController.getStoriesFeed, (req: Request, res: Response) => {
   res.status(200).json(res.locals.storiesFeed);
 });
@@ -72,9 +74,20 @@ app.get("/home", StoryController.getStoriesFeed, (req: Request, res: Response) =
   */
 
 // route for story creation (new story nodes)
-app.post('/storyCreator', /* CreateStoryController,*/ (req: any, res: any) => {
+app.post('/storyCreator', /* CreateStoryController,*/ (req: Request, res: Response) => {
   res.status(200).json(/*res.locals.newStoryNode*/);
 });
+
+/* Comments */
+
+// route to get comments
+app.get('/story/:id/comments', CommentsController.getComments, (req: Request, res: Response) => {
+  res.status(200).json(res.locals.fetchedComments)});
+  
+// route to post comments
+app.post("/story/:id/comments", CommentsController.postComment, (req: Request, res: Response) => {
+  res.status(200).json(res.locals.newComment)});
+
 
 // Serves React frontend for all unmatched routes
 app.get("*", (req: Request, res: Response) => {

@@ -35,32 +35,30 @@ const StoryController = {
         });
       }
     },
-
-  // Get full story text 
-    getFullStory: async (req: Request, res: Response, next: NextFunction) => {
-      const { id } = req.params;
-  
+    // get full story by page
+    getPage: async (req: Request, res: Response, next: NextFunction) => {
+      const { storyId, pageId } = req.params;
       try {
-        const queryText = "SELECT text FROM stories WHERE id = $1";
-        const values = [id];
-  
-        const result: QueryResult = await pool.query(queryText, values);
-  
+        const result = await pool.query(
+          "SELECT * FROM pages WHERE story_id = $1 AND id = $2",
+          [storyId, pageId]
+        );
+    
         if (result.rows.length === 0) {
           return next({
-            log: "Story text not found",
+            log: 'Page not found',
             status: 404,
-            message: { err: "Story text not found" },
+            message: { err: 'Page not found' },
           });
         }
-  
-        res.locals.fullStory = result.rows[0];
+    
+        res.locals.page = result.rows[0];
         return next();
       } catch (err) {
         return next({
-          log: "Error in StoryController.getFullStory",
+          log: 'Error in getPage controller',
           status: 500,
-          message: { err: "An error occurred" },
+          message: { err: 'Internal server error' },
         });
       }
     },

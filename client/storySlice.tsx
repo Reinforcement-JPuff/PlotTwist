@@ -27,8 +27,8 @@ const storySlice = createSlice({
   name: "stories",
   initialState,
   reducers: {
-    setCurrentStory: (state, action: PayloadAction<number>) => {
-      state.currentStory = state.stories.find((story) => story.id === action.payload);
+    setCurrentStory: (state, action: PayloadAction<Story>) => {
+      state.currentStory = action.payload;
     },
   },
 });

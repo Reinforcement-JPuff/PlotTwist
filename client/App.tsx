@@ -22,6 +22,7 @@ const App = () => {
           <Route path="/" element={<Login />} /> 
           <Route path="/newLogin" element={<NewLogin />} /> 
           <Route path="/home" element={<Home />} />
+          <Route path="/story/:storyId/page/:pageId" element={<ReadStory />} />
           <Route path="/storyCreator" element={<StoryCreator />} />
           <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>

@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import homeReducer from "./homeSlice"; 
 import storyReducer from "./storySlice"; 
-import commentsReducer from "./commentsSlice";
 import readStoryReducer from "./readStorySlice"; 
 import libraryReducer from "./librarySlice";
 import loginReducer from "./loginSlice";
@@ -17,7 +16,6 @@ const store = configureStore({
         login: loginReducer,
         home: homeReducer,
         stories: storyReducer,
-        comments: commentsReducer,
         library: libraryReducer, 
         readStory: readStoryReducer,
         [apiSlice.reducerPath]: apiSlice.reducer 

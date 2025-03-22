@@ -1,33 +1,40 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store";
-import { goToPage } from "../readStorySlice";
+import { useParams, useNavigate } from "react-router-dom";
+import { useGetStoryPageQuery } from "../features/apiSlice";
 
-interface StoryPage {
-  id: number;
-  title: string;
-  text: string;
-  choices: { text: string; nextPage: number }[];
-}
+const ReadStory  = () => {
+  const { storyId, pageId } = useParams();
+  const navigate = useNavigate();
 
-const ReadStory = () => {
-  const dispatch = useDispatch();
-  const { pages, currentPage } = useSelector((state: RootState) => state.readStory);
+  const numericStoryId = Number(storyId);
+  const numericPageId = Number(pageId);
 
-  const current: StoryPage = pages.find((p) => p.id === currentPage) || pages[0];
+  const { data: page, isLoading, isError } = useGetStoryPageQuery({
+    storyId: numericStoryId,
+    pageId: numericPageId,
+  });
+
+  if (isLoading) return <p>Loading story page...</p>;
+  if (isError || !page) return <p>Page not found.</p>;
 
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>
-      <h2>{current.title}</h2>
-      <p>{current.text}</p>
-      <div>
-        {current.choices.map((choice, i) => (
-          <button key={i} onClick={() => dispatch(goToPage(choice.nextPage))}>
+      <h2>{page.title}</h2>
+      <p>{page.text}</p>
+      <div style={{ marginTop: "20px" }}>
+        {page.choices.map((choice, i) => (
+          <button
+            key={i}
+            style={{ margin: "5px", padding: "10px" }}
+            onClick={() =>
+              navigate(`/story/${numericStoryId}/page/${choice.nextPage}`)
+            }
+          >
             {choice.text}
           </button>
         ))}
       </div>
-      <p>Page {currentPage}</p>
+      <p style={{ marginTop: "10px" }}>Page {page.id}</p>
     </div>
   );
 };
