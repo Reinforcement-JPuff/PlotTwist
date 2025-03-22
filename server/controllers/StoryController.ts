@@ -35,6 +35,7 @@ const StoryController = {
         });
       }
     },
+
   // Get full story text 
     getFullStory: async (req: Request, res: Response, next: NextFunction) => {
       const { id } = req.params;
@@ -63,6 +64,7 @@ const StoryController = {
         });
       }
     },
+    
   // Get saved stories for the Library 
     getLibraryStories: async (_req: Request, res: Response, next: NextFunction) => {
       try {
@@ -80,6 +82,31 @@ const StoryController = {
         });
       }
     },
-  };
+
+  getStoriesFeed: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const queryText = "SELECT * FROM stories ORDER BY created_at DESC LIMIT 10";
+
+      const result: QueryResult = await pool.query(queryText, []);
+
+      if (result.rows.length === 0) {
+        return next({
+          log: "Error retrieving stories",
+          status: 404,
+          message: { err: "Couldn't retrieve stories" },
+        });
+      }
+
+      res.locals.storiesFeed = result.rows;
+      return next();
+    } catch (err) {
+      return next({
+        log: "Error in StoryController.getStoriesFeed",
+        status: 500,
+        message: { err: "An error occurred" },
+      });
+    }
+  }
+};
 
 export default StoryController;

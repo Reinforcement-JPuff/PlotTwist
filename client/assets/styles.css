@@ -1,5 +1,6 @@
 body {
     background-color: rgb(32, 53, 53);
+    font-family: 'Courier New', Courier, monospace;
 }
 
 /*Login component styling*/
@@ -37,7 +38,111 @@ body {
     padding-left: 15%;
     padding-right: 15%;
     font-family: 'Courier New', Courier, monospace;
-    border-radius: 20%;
+    border-radius: 20px;
     background-color: white;
+    border-color: rgb(32, 53, 53);
     border: none;
+}
+
+/* Home page component styling */
+#homeFeed {
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 900px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px;
+}
+
+.homeFeedCardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px;
+}
+
+.homeFeedButtons {
+    padding-left: 15%;
+    padding-right: 15%;
+    font-family: 'Courier New', Courier, monospace;
+    width: 250px;
+    border-radius: 20px;
+    background-color: ghostwhite;
+    border: 20 px;
+    padding: 10px 20px;
+    margin: 5px;
+    color: rgb(32, 53, 53);
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.homeFeedButtons:hover {
+    transform: translateY(-2.5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.homeFeedCard {
+    border-radius: 20px;
+    width: 50%;
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.homeFeedCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.homeFeedImg {
+    width: 50%;
+    height: auto;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.homeFeedTitle {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    /* width: 100%; */
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.homeFeedBio {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+    color: #777;
+    margin-top: 5px;
+    /* width: 100%; */
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-left: 10px;
+    padding-right: 10px;
 }

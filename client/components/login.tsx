@@ -26,6 +26,7 @@ const Login = () => {
       navigate('/home');
 
     } catch (error) {
+      alert('Invalid credentials. Please enter a valid username and password.')
       console.error('Failed to login:', error)
     }
   }

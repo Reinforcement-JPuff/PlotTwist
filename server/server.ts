@@ -63,6 +63,10 @@ app.get("/library", StoryController.getLibraryStories, (req: Request, res: Respo
   res.status(200).json(res.locals.library);
 });
 
+app.get("/home", StoryController.getStoriesFeed, (req: Request, res: Response) => {
+  res.status(200).json(res.locals.storiesFeed);
+});
+
 /*
   Story Creator
   */
@@ -76,8 +80,6 @@ app.post('/storyCreator', /* CreateStoryController,*/ (req: any, res: any) => {
 app.get("*", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
-
-
 
 // global error handler
 app.use((err: any, req: any, res: any, next: any) => {

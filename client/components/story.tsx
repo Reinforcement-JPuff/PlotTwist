@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { setCurrentStory } from "../storySlice";
+import { useGetStoryCoverQuery } from "../features/apiSlice";
 import Comments from "../components/comments";
 
 const Story = () => {
   const dispatch = useDispatch();
   const story = useSelector((state: RootState) => state.stories.currentStory);
+
   const [notification, setNotification] = useState(false);
 
   if (!story) {
