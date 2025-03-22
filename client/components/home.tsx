@@ -10,6 +10,7 @@ interface Story {
   title: string;
   cover: string | undefined;
   bio: string;
+  created_at?: string;
 }
 
 

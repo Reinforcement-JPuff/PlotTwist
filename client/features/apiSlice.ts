@@ -44,7 +44,7 @@ export const apiSlice  = createApi({
         // Story Creator (e.g., saving a finished story)
         // Story cover (e.g., getting a story cover with bio, comments)
         getStoryCover: builder.query <{ id: number, title: string, cover: string, bio: string }, void> ({
-            query: () => '/story/:id'
+            query: () => '/story/${id}'
         })
         // Comments (fetching saved comments for a story)
         // Read Story (getting a story text)
