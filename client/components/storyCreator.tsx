@@ -13,7 +13,7 @@ import {
 import '@xyflow/react/dist/style.css';
 
 const initialNodes = [
-  { id: '1', position: { x: 0, y: 0 }, data: { label: 'Node 1', content: 'This is a long-form string for Node 1.' } },
+  { id: '1', position: { x: 0, y: 0 }, data: { label: 'Beginning', content: 'This is a long-form string for Node 1.' } },
 ];
 const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
 
@@ -24,7 +24,7 @@ const StoryCreator = () => {
   const [editedLabel, setEditedLabel] = useState('');
   const [editedContent, setEditedContent] = useState('');
 
-  const createNode = useCallback((event: any) => {
+  const createNode = useCallback((event) => {
     const newNode = {
       id: `${Date.now()}`,
       position: { x: event.clientX, y: event.clientY },
@@ -34,17 +34,17 @@ const StoryCreator = () => {
   }, [setNodes]);
 
   const onConnect = useCallback(
-    (params: any) => setEdges((eds) => addEdge(params, eds)),
+    (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges],
   );
 
-  const onNodeClick = useCallback((event: any, node: any) => {
+  const onNodeClick = useCallback((event, node) => {
     setSelectedNode(node.id);
     setEditedLabel(node.data.label);
     setEditedContent(node.data.content || '');
   }, []);
 
-  const handleSave = useCallback(() => {
+  const handleSaveEdit = useCallback(() => {
     setNodes((nds) =>
       nds.map((node) =>
         node.id === selectedNode
@@ -52,8 +52,42 @@ const StoryCreator = () => {
           : node
       )
     );
-    setSelectedNode(null);
+    setSelectedNode(null); // Close the edit form
   }, [selectedNode, editedLabel, editedContent, setNodes]);
+
+  const handleSaveStory = async () => {
+    const storyData = {
+      nodes: nodes.map(node => ({
+        node_id: node.id,
+        position_x: node.position.x,
+        position_y: node.position.y,
+        data: node.data,
+      })),
+      edges: edges.map(edge => ({
+        source_id: edge.source,
+        target_id: edge.target,
+      })),
+    };
+
+    try {
+      const response = await fetch('/saveStory', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(storyData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save story');
+      }
+
+      const result = await response.json();
+      console.log('Story saved successfully:', result);
+      alert('Story saved successfully!');
+    } catch (error) {
+      console.error('Error saving:', error);
+      alert('Failed to save. Please try again.');
+    }
+  };
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
@@ -71,8 +105,9 @@ const StoryCreator = () => {
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
       </ReactFlow>
 
+      {/* Edit Form */}
       {selectedNode && (
-        <div style={{ position: 'absolute', top: '20px', right: '20px', background: '#fff', padding: '10px', border: '1px solid #ddd', borderRadius: '5px' }}>
+        <div style={{ position: 'absolute', top: '20px', right: '20px', background: '#fff', padding: '10px', border: '1px solid #ddd', borderRadius: '5px', zIndex: 1000 }}>
           <div>
             <label>Label:</label>
             <input
@@ -87,10 +122,29 @@ const StoryCreator = () => {
               onChange={(e) => setEditedContent(e.target.value)}
             />
           </div>
-          <button onClick={handleSave}>Save</button>
+          <button onClick={handleSaveEdit}>Save</button>
           <button onClick={() => setSelectedNode(null)}>Cancel</button>
         </div>
       )}
+
+      {/* Save Button */}
+      <button
+        onClick={handleSaveStory}
+        style={{
+          position: 'absolute',
+          top: 10,
+          right: 10,
+          padding: '10px 20px',
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          zIndex: 1000,
+        }}
+      >
+        Save Story
+      </button>
     </div>
   );
 };
